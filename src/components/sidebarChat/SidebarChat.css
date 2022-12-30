@@ -1,0 +1,14 @@
+.chat-name {
+  margin-top: 10px;
+  display: flex;
+  gap: 15px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid whitesmoke;
+  border-radius: 25px;
+}
+.chat-name:hover {
+  background-color: #ebebeb;
+  cursor: pointer;
+}

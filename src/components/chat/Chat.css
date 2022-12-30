@@ -1,0 +1,76 @@
+.chat {
+  /* background-color: burlywood; */
+  /* width: 100vh; */
+
+  display: flex;
+  flex-direction: column;
+  flex: 0.65;
+  background-color: rgb(228, 232, 235);
+}
+
+.send-message-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid lightgray;
+  height: 62px;
+  /* gap: 10px; */
+  /* padding: 5px; */
+}
+.send-message-footer > form {
+  flex: 1;
+  display: flex;
+}
+.send-message-footer > form > input {
+  flex: 1;
+  /* max-height: 50px; */
+}
+
+.send-message-footer > form > textarea {
+  flex: 1;
+  padding-top: 20px;
+  padding-left: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  /* for resize it */
+  resize: none;
+  overflow: hidden;
+  min-height: 10px !important;
+  max-height: 50px;
+
+  /* max-height: 80px; */
+  /* overflow: auto; */
+}
+
+.send-message-footer > form > textarea::-webkit-scrollbar {
+  display: none;
+}
+/* 
+    when the user hit enter we will submit the form
+*/
+.send-message-footer > form > button {
+  /* display: none; */
+
+  padding: 6px;
+  background-color: white;
+  border: 2px solid rgb(226, 221, 221);
+  border-radius: 10px;
+  cursor: pointer;
+  color: rgb(111, 109, 109);
+}
+.input-message {
+  border: none;
+  padding: 10px;
+  border-radius: 30px;
+}
+.input-message:focus {
+  outline: none;
+}
+.send-message {
+  /* padding: 6px; */
+  /* background-color: white; */
+  /* border: 2px solid rgb(226, 221, 221); */
+  /* border-radius: 5px; */
+  /* cursor: pointer; */
+  /* color: rgb(111, 109, 109); */
+}

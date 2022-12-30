@@ -1,0 +1,73 @@
+.sidebar {
+  /* background-color: aquamarine; */
+  /* width: 300px; */
+  /* height: 100vh; */
+
+  display: flex;
+  flex-direction: column;
+  flex: 0.35;
+}
+
+/*
+        SIDEBAR HEADER
+*/
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: whitesmoke;
+  align-items: center;
+  padding: 15px 8px;
+}
+
+.setting-icons {
+  display: flex;
+  /* gap: 10px; */
+  width: 10vw;
+}
+
+.search-input {
+  border: none;
+  width: 94%;
+  padding-left: 5px;
+  font-size: 13px;
+}
+.search-input:focus {
+  outline: none;
+}
+
+.search-input > .MuiSvgIcon-root {
+  font-size: 5px !important;
+  /* not applying... */
+}
+
+/* SIDEBAR SEARCH */
+.sidebar-search {
+  display: flex;
+  border: 2px solid whitesmoke;
+  background-color: white;
+  padding: 4px 5px;
+  border-radius: 25px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+/* SIDE BAR CHATS */
+.contact-list {
+  background-color: white;
+  flex: 1;
+  /* scrollbar-width: thin; */
+  overflow-y: auto;
+}
+
+.contact-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* route active */
+
+.active {
+  opacity: 0.5 !important;
+}
