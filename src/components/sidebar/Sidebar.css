@@ -19,7 +19,9 @@
   align-items: center;
   padding: 15px 8px;
 }
-
+.profile-icon:hover {
+  cursor: pointer;
+}
 .setting-icons {
   display: flex;
   /* gap: 10px; */

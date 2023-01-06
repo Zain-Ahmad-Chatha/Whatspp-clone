@@ -1,4 +1,4 @@
-import React from "react"; // , { useState }
+import React, { useEffect, useState } from "react"; // , { useState }
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import ChatIcon from "@material-ui/icons/Chat";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
@@ -7,6 +7,8 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import SearchIcon from "@material-ui/icons/Search";
 import SidebarChat from "../sidebarChat";
 import "./Sidebar.css";
+import axios from "../../utils/axios";
+
 export const CHAT_DETAIL = [
   {
     id: 1,
@@ -81,11 +83,40 @@ export const CHAT_DETAIL = [
 ];
 const Sidebar = () => {
   // const [chatDetail, setChatDetail] = useState(CHAT_DETAIL);
+  const navigate = useNavigate();
+  const [searchText, setSearchText] = useState("");
+  const [chat_detail, setChat_detail] = useState();
+  const [loggedUser, setLoggedUser] = useState();
+  const onLogout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("user");
+    navigate("/");
+    window.location.reload();
+  };
+  useEffect(() => {
+    setLoggedUser(JSON.parse(localStorage.getItem("user")));
+    axios
+      .get("/users", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      })
+      .then((response) => {
+        // console.log("responseINUsers : ", response.data);
+        setChat_detail(response.data);
+      })
+      .catch((err) => {
+        console.log("error ", err);
+      });
+  }, []);
   return (
     <div className="sidebar">
       <header className="sidebar-header">
-        <div className="profile-icon">
-          <Avatar src={require("../../assets/profile.jpg")} />
+        <div className="profile-icon" title="Logout" onClick={() => onLogout()}>
+          <Avatar
+            // src={require("../../assets/profile.jpg")}
+            src={loggedUser && loggedUser.picture}
+          />
         </div>
         <div className="setting-icons">
           <IconButton>
@@ -105,17 +136,35 @@ const Sidebar = () => {
           type={"text"}
           className="search-input"
           placeholder="Search or Start New Chat"
+          value={searchText}
+          onChange={(event) => setSearchText(event.target.value)}
         />
       </div>
 
       <div className="contact-list">
-        {CHAT_DETAIL.map((obj, index) => {
-          return (
-            <NavLink to={"/path/" + obj.id} key={index}>
-              <SidebarChat key={index} detail={obj} />
-            </NavLink>
-          );
-        })}
+        {chat_detail &&
+          chat_detail
+            .filter(
+              (findObj) =>
+                findObj.firstName
+                  .toLocaleLowerCase()
+                  .includes(searchText.toLocaleLowerCase()) ||
+                findObj.lastName
+                  .toLocaleLowerCase()
+                  .includes(searchText.toLocaleLowerCase())
+            )
+            .map((obj, index) => {
+              return (
+                <NavLink
+                  // to={"/" + obj.id}
+                  // key={index}
+                  to={"/chat/" + obj.id}
+                  key={index}
+                >
+                  <SidebarChat key={index} detail={obj} />
+                </NavLink>
+              );
+            })}
       </div>
     </div>
   );

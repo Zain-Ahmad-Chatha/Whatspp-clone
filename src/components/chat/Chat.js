@@ -84,6 +84,7 @@ export const CHAT_DETAIL = [
 const Chat = () => {
   const [messagesList, setMessagesList] = useState([]);
   const [message, setMessage] = useState("");
+  const [user, setUser] = useState();
   const params = useParams();
   useEffect(() => {
     console.log("params ", params);
@@ -136,7 +137,7 @@ const Chat = () => {
   };
   return (
     <div className="chat">
-      <ChatHeader detail={CHAT_DETAIL.find((obj) => obj.id == params.id)} />
+      <ChatHeader detail={user} />
       <ChatBody messages={messagesList} />
       <div className="send-message-footer">
         <IconButton>

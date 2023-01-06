@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios from "../../utils/axios";
 
 import "./Login_Register.css";
-const Login = () => {
+const Login = (props) => {
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState({
     username: "",
@@ -14,13 +14,16 @@ const Login = () => {
 
   const signInBtn = (event) => {
     event.preventDefault();
+
     axios
       .get(`/users/${formValues.username}/${formValues.password}`)
       .then((success) => {
-        console.log("success : ", success);
+        console.log("success : ", success.data.data[0]);
+        localStorage.setItem("access_token", success.data.access_token);
+        localStorage.setItem("user", JSON.stringify(success.data.data[0]));
       })
       .catch((err) => {
-        console.log("error : ", err);
+        console.log("error while getting users : ", err);
       });
   };
   const handleChange = (event) => {
@@ -47,7 +50,18 @@ const Login = () => {
             value={formValues.password}
             onChange={(event) => handleChange(event)}
           />
-          <button className="sign-in-btn"> Sign In </button>
+          <button
+            className={
+              !Object.values(formValues).every((value) => value)
+                ? "sign-in-btn-disable"
+                : "sign-in-btn"
+            }
+            type="submit"
+            disabled={!Object.values(formValues).every((value) => value)}
+          >
+            {" "}
+            Sign In{" "}
+          </button>
         </form>
       </div>
       <div className="right-side">

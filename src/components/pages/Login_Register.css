@@ -3,6 +3,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  /* position: absolute; */
 }
 .left-side {
   flex: 0.5;
@@ -53,7 +54,16 @@
   cursor: pointer;
 }
 .sign-in-btn:hover {
-  opacity: 0.9;
+  opacity: 0.8;
+}
+.sign-in-btn-disable {
+  padding: 10px 45px;
+  background-color: #097357;
+  border-radius: 20px;
+  font-weight: bold;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
 /* RIGHT SIDE. */

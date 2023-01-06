@@ -1,47 +1,72 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import ToasterNotify from "../../utils/Toaster";
+import { Button, Position, Toast, Toaster, Intent } from "@blueprintjs/core";
 
 import axios from "../../utils/axios";
 import "./Login_Register.css";
 const Register = () => {
   const navigate = useNavigate();
 
-  const [valid, setValid] = useState(true);
+  const [valid, setValid] = useState({ success: false, error: false });
   const [formValues, setFormValues] = useState({
     firstName: "",
     lastName: "",
     username: "",
     password: "",
-    pictureLink: "",
+    picture: "",
     // emailValid: false,
     // formValid: false,
   });
 
   const signUpBtn = (event) => {
+    console.log("wwwww");
     event.preventDefault();
+    // setValid(true);
     axios
       .post("/users", { formValues })
       .then((success) => {
         console.log("posted", success);
+        setValid({ ...valid, success: true });
         setFormValues({
           firstName: "",
           lastName: "",
           username: "",
           password: "",
-          pictureLink: "",
+          picture: "",
         });
         navigate("/login");
       })
       .catch((err) => {
-        console.log("error : ", err);
+        console.log("error while creating user : ", err);
+        setValid({ ...valid, error: true });
       });
   };
-
   const handleChange = (event) => {
     setFormValues({ ...formValues, [event.target.name]: event.target.value });
   };
   return (
     <div className="login-container">
+      {valid.success && (
+        <Toaster position={Position.TOP_RIGHT}>
+          <Toast
+            timeout={2000}
+            message={"User Register Successfully."}
+            intent={Intent.SUCCESS}
+            onDismiss={() => setValid({ ...valid, success: false })}
+          />
+        </Toaster>
+      )}
+      {valid.error && (
+        <Toaster position={Position.TOP_RIGHT}>
+          <Toast
+            timeout={2000}
+            message={"Reguired Fields Must Be Filled."}
+            intent={Intent.DANGER}
+            onDismiss={() => setValid({ ...valid, error: false })}
+          />
+        </Toaster>
+      )}
       <div className="left-side">
         <h1>Register to Your Account</h1>
         <form onSubmit={(event) => signUpBtn(event)} className="login-form">
@@ -79,10 +104,10 @@ const Register = () => {
           />
           <input
             type={"text"}
-            className="pictureLink form-control"
+            className="picture form-control"
             placeholder="Picture Link"
-            name="pictureLink"
-            value={formValues.pictureLink}
+            name="picture"
+            value={formValues.picture}
             onChange={(event) => handleChange(event)}
           />
           <button
